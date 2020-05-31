@@ -1,0 +1,344 @@
+import 'dart:async';
+import 'dart:io' show Platform;
+import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_geofence/geofence.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import 'package:permission_handler/permission_handler.dart';
+
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
+  String _platformVersion = Platform.isAndroid ? "Android" : "ios";
+
+  Completer<GoogleMapController> _controller = Completer();
+
+  static LatLng _initialPosition;
+
+  Set<Marker> _markers = {};
+
+  static LatLng _geofenceMarkerPosition;
+
+  static double _initRadius = 500.0;
+
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
+  PermissionStatus _permissionStatus = PermissionStatus.undetermined;
+
+  @override
+  void initState() {
+    super.initState();
+    
+   Geofence.requestPermissions();
+    _initPlatformState();
+
+    _listenForPersmissionStatus();
+
+    WidgetsBinding.instance.addObserver(this);
+
+// initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
+    var initializationSettingsAndroid =
+        AndroidInitializationSettings('app_icon');
+
+    var initializationSettingsIOS = IOSInitializationSettings();
+
+    var initializationSettings = InitializationSettings(
+      initializationSettingsAndroid,
+      initializationSettingsIOS,
+    );
+
+    flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      onSelectNotification: _onSelectNotification,
+    );
+  }
+
+  @override
+  void didUpdateWidget(HomeScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    print("oldwidget $oldWidget");
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+  }
+
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    print("StateAppLifeCycle $state");
+    if (state == AppLifecycleState.resumed) {
+      _listenForPersmissionStatus();
+    }
+  }
+
+  Future<void> _listenForPersmissionStatus() async {
+    try {
+      final _status = await Permission.locationWhenInUse.status;
+
+      switch (_status) {
+        case PermissionStatus.granted:
+          print("permission granted");
+           _getUserLocation();
+          break;
+        case PermissionStatus.undetermined:
+          print("permission undetermined");
+          Geofence.requestPermissions();
+          break;
+        case PermissionStatus.denied:
+          print("permissoin denied");
+          break;
+        case PermissionStatus.restricted:
+          print("permission restricted");
+          break;
+        case PermissionStatus.permanentlyDenied:
+          print("permissoin permanently denied");
+          break;
+        default:
+          print("permission status not found");
+      }
+    } catch (error) {
+      print("get permission status error: $error");
+    }
+  }
+
+  Future<void> _initPlatformState() async {
+    if (!mounted) return;
+
+    Geofence.initialize();
+
+    Geofence.startListening(GeolocationEvent.entry, (entry) {
+      _scheduleNotification("Entry of a georegion", "Welcome to: ${entry.id}");
+    });
+
+    Geofence.startListening(GeolocationEvent.exit, (entry) {
+      _scheduleNotification("Exit of a georegion", "Byebye to: ${entry.id}");
+    });
+
+    setState(() {});
+  }
+
+  Future _onSelectNotification(String payload) async {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text("Here is your payload"),
+        content: Text("Playload : $payload"),
+      ),
+    );
+  }
+
+  Future<void> _getUserLocation() async {
+    try {
+      final Coordinate userLoc = await Geofence.getCurrentLocation();
+
+      setState(() {
+        _initialPosition = LatLng(userLoc.latitude, userLoc.longitude);
+      });
+    } catch (error) {
+      print("Error get current location");
+    }
+  }
+
+  void _setGeofenceRegion(LatLng geofenceMarkerLatLng) {
+    Geolocation location = Geolocation(
+      id: "luk1234",
+      latitude: geofenceMarkerLatLng.latitude,
+      longitude: geofenceMarkerLatLng.longitude,
+      radius: _initRadius,
+    );
+
+    Geofence.removeGeolocation(
+      location,
+      GeolocationEvent.entry,
+    ).then((value) {
+      _scheduleNotification(
+          "Georegion removed", "Your geofence has been removed");
+    }).catchError((error) {
+      print("Removed geofence failed, $error");
+    });
+
+    Geofence.addGeolocation(
+      location,
+      GeolocationEvent.entry,
+    ).then((value) {
+      print("great success");
+
+      _scheduleNotification("Georegion added", "Your geofence has been added");
+    }).catchError((error) {
+      print("Added geofence failed, $error");
+    });
+    ;
+  }
+
+  Future<void> _addMarkLongPressed(LatLng latLng) async {
+    setState(() {
+      _markers = {};
+      _geofenceMarkerPosition = latLng;
+
+      _setGeofenceRegion(_geofenceMarkerPosition);
+
+      _markers.add(
+        Marker(
+          icon: BitmapDescriptor.defaultMarker,
+          markerId: MarkerId(_initialPosition.toString()),
+          position: latLng,
+          infoWindow:
+              InfoWindow(title: "Region Set", snippet: "This is snippet"),
+          onTap: () {
+            setState(() {
+              _markers = {};
+            });
+          },
+        ),
+      );
+    });
+  }
+
+  void _scheduleNotification(String title, String subtitle) {
+    Future.delayed(Duration(seconds: 5)).then((result) async {
+      var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        'your channel id',
+        'your channel name',
+        'your channel description',
+        importance: Importance.Max,
+        priority: Priority.High,
+        ticker: 'ticker',
+      );
+
+      var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+
+      var platformChannelSpecifics = NotificationDetails(
+        androidPlatformChannelSpecifics,
+        iOSPlatformChannelSpecifics,
+      );
+
+      await flutterLocalNotificationsPlugin.show(
+        0,
+        title,
+        subtitle,
+        platformChannelSpecifics,
+        payload: 'you clicked the notfication',
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var deviceData = MediaQuery.of(context);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Geofence'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.help_outline),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (_) => AlertDialog(
+                  title: Text("Guideline to use geofence"),
+                  content: Text(
+                      "Long pressed the area you wanted to place marker, Slider will be appear for you to adjust the geofence ranges"),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text("OK"),
+                      onPressed: () => Navigator.pop(context),
+                    )
+                  ],
+                ),
+              );
+            },
+          )
+        ],
+      ),
+      body: _initialPosition == null
+          ? Center(child: CircularProgressIndicator())
+          : Stack(
+              children: <Widget>[
+                Container(
+                  height: deviceData.size.height,
+                  width: deviceData.size.width,
+                  child: GoogleMap(
+                    mapType: MapType.normal,
+                    onMapCreated: (GoogleMapController controller) {
+                      _controller.complete(controller);
+                    },
+                    initialCameraPosition: CameraPosition(
+                      target: _initialPosition,
+                      zoom: 14.4746,
+                    ),
+                    myLocationEnabled: true,
+                    compassEnabled: true,
+                    myLocationButtonEnabled: true,
+                    tiltGesturesEnabled: false,
+                    onLongPress: (latLng) {
+                      _addMarkLongPressed(latLng);
+                    },
+                    markers: _markers,
+                    circles: _geofenceMarkerPosition == null
+                        ? null
+                        : Set.from(
+                            [
+                              Circle(
+                                fillColor:
+                                    ThemeData().primaryColor.withOpacity(0.2),
+                                strokeColor: Colors.transparent,
+                                center: _geofenceMarkerPosition,
+                                radius: _initRadius,
+                                circleId: CircleId(
+                                  _initialPosition.toString(),
+                                ),
+                              )
+                            ],
+                          ),
+                  ),
+                ),
+                if (_markers.isNotEmpty)
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
+                      margin: EdgeInsets.only(bottom: 30, right: 80, left: 30),
+                      padding: EdgeInsets.all(20),
+                      width: double.infinity,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Text("${(_initRadius / 100).toStringAsFixed(0)} km"),
+                          Slider(
+                              value: _initRadius,
+                              divisions: 5,
+                              min: 0,
+                              max: 3000,
+                              onChangeEnd: (_) {
+                                _setGeofenceRegion(_geofenceMarkerPosition);
+                              },
+                              onChanged: (newValue) {
+                                setState(() {
+                                  _initRadius = newValue;
+                                });
+                              })
+                        ],
+                      ),
+                    ),
+                  )
+              ],
+            ),
+    );
+  }
+}
