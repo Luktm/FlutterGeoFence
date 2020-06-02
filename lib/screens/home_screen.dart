@@ -23,23 +23,23 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
   static LatLng _geofenceMarkerPosition;
 
-  static double _initRadius = 500.0;
+  static double _initRadius = 600.0;
+  
+  String _userStatus = "None";
 
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  PermissionStatus _permissionStatus = PermissionStatus.undetermined;
 
   @override
   void initState() {
     super.initState();
-    
-   Geofence.requestPermissions();
+
+    WidgetsBinding.instance.addObserver(this);
+     Geofence.requestPermissions();
     _initPlatformState();
 
     _listenForPersmissionStatus();
-
-    WidgetsBinding.instance.addObserver(this);
 
 // initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
     var initializationSettingsAndroid =
@@ -85,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       switch (_status) {
         case PermissionStatus.granted:
           print("permission granted");
-           _getUserLocation();
+          _getUserLocation();
           break;
         case PermissionStatus.undetermined:
           print("permission undetermined");
@@ -114,11 +114,17 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     Geofence.initialize();
 
     Geofence.startListening(GeolocationEvent.entry, (entry) {
-      _scheduleNotification("Entry of a georegion", "Welcome to: ${entry.id}");
+      _scheduleNotification("Inside GeoFence", "Welcome to: ${entry.id}");
+      setState(() {
+        _userStatus = "inside";
+      });
     });
 
     Geofence.startListening(GeolocationEvent.exit, (entry) {
-      _scheduleNotification("Exit of a georegion", "Byebye to: ${entry.id}");
+      _scheduleNotification("Outside GeoFence", "Byebye to: ${entry.id}");
+       setState(() {
+        _userStatus = "outside";
+      });
     });
 
     setState(() {});
@@ -148,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
   void _setGeofenceRegion(LatLng geofenceMarkerLatLng) {
     Geolocation location = Geolocation(
-      id: "luk1234",
+      id: "luktm",
       latitude: geofenceMarkerLatLng.latitude,
       longitude: geofenceMarkerLatLng.longitude,
       radius: _initRadius,
@@ -157,12 +163,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     Geofence.removeGeolocation(
       location,
       GeolocationEvent.entry,
-    ).then((value) {
-      _scheduleNotification(
-          "Georegion removed", "Your geofence has been removed");
-    }).catchError((error) {
-      print("Removed geofence failed, $error");
-    });
+    );
 
     Geofence.addGeolocation(
       location,
@@ -170,11 +171,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     ).then((value) {
       print("great success");
 
-      _scheduleNotification("Georegion added", "Your geofence has been added");
+      // _scheduleNotification("Georegion added", "Your geofence has been added");
     }).catchError((error) {
       print("Added geofence failed, $error");
     });
-    ;
   }
 
   Future<void> _addMarkLongPressed(LatLng latLng) async {
@@ -319,11 +319,17 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
-                          Text("${(_initRadius / 100).toStringAsFixed(0)} km"),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              Text("Geofence area: ${(_initRadius / 100).toStringAsFixed(0)}KM"),
+                              Text("Status: $_userStatus")
+                            ],
+                          ),
                           Slider(
                               value: _initRadius,
                               divisions: 5,
-                              min: 0,
+                              min: 600,
                               max: 3000,
                               onChangeEnd: (_) {
                                 _setGeofenceRegion(_geofenceMarkerPosition);
