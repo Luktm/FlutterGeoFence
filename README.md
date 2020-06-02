@@ -14,7 +14,7 @@
 ## Run ios emulator.
 
 1. Open the visual code studio, select "Run > Run Without Debugging"
-![Run without debugging](https://github.com/Luktm/FlutterGeoFence/blob/master/Documentation/emulator-custom-location.png)
+![Run without debugging](https://github.com/Luktm/FlutterGeoFence/blob/master/Documentation/vcs-run-dubuging.png)
 
 2. Select ios emulator, it will run the app on the ios emulator for few seconds.
 
@@ -23,7 +23,7 @@
 ## How to use
 
 1. Select your desired current user location. Adjust the location coordinate from ios emulator. select emulator and go "Feature > Location > Custom Location", fill the coordinate. Go google map and find the coordinate you found as you like.
-![Location Coordinate](https://github.com/Luktm/FlutterGeoFence/blob/master/Documentation/vcs-run-dubuging.png)
+![Location Coordinate](https://github.com/Luktm/FlutterGeoFence/blob/master/Documentation/emulator-custom-location.png)
 
 2. Long pressed the map to place the geofence marker, the slider will appear too. Slider indicated the geofence radius area.
 
