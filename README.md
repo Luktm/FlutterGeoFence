@@ -26,7 +26,7 @@
 ![Location Coordinate](https://github.com/Luktm/FlutterGeoFence/blob/master/Documentation/emulator-custom-location.png)
 
 2. Open google map and find the coordinate from any places, "right click" > "What's here".
-![Location Coordinate]()
+![Location Coordinate](https://github.com/Luktm/FlutterGeoFence/blob/master/Documentation/google-map-get-coordinate.png)
 
 3. Long pressed the map to place the geofence marker, the slider will appear too. Slider indicated the geofence radius area.
 
