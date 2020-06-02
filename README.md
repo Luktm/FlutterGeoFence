@@ -38,4 +38,4 @@
 
 # Important Notice
 
-Android platform still not able to fully work for this package [flutter_geofence](https://pub.dev/packages/flutter_geofence). The creator/developer still working on this issues. [Issues/Problem for the android](https://github.com/DwayneCoussement/flutter_geofence/issues/5)
+Android platform still not able to fully work for this package [flutter_geofence](https://pub.dev/packages/flutter_geofence). The creator/developer still working on this issues. [Issues/Problem](https://github.com/DwayneCoussement/flutter_geofence/issues/5) for the android.
