@@ -23,7 +23,7 @@
 ## How to use
 
 1. Select your desired current user location. Adjust the location coordinate from ios emulator. select emulator and go "Feature > Location > Custom Location", fill the coordinate. 
-![Location Setting](https://github.com/Luktm/FlutterGeoFence/blob/master/Documentation/emulator-custom-location.png)
+![Location Setting](https://github.com/Luktm/FlutterGeoFence/blob/master/Documentation/ios-emulator-custom-location.png)
 
 2. Open google map and find the coordinate from any places, "right click" > "What's here".
 ![Google Map Coordinate](https://github.com/Luktm/FlutterGeoFence/blob/master/Documentation/google-map-get-coordinate.png)
