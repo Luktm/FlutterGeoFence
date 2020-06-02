@@ -1,16 +1,38 @@
-# setel_geofence
+## Geofence flutter setup.
 
-A new Flutter project.
+1. Clone the project.
 
-## Getting Started
+2. cd to the directory, eg. cd/user/yourProject Directory/.
 
-This project is a starting point for a Flutter application.
+3. run "flutter pub get" command in terminal and wait for installing the package.
 
-A few resources to get you started if this is your first Flutter project:
+4. cd to ios directory, run "pod install", wait for installing done, run command "cd .." to back the root directory.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+5. All done.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+## Run ios emulator.
+
+1. Open the visual code studio, select "Run > Run Without Debugging"
+![Run without debugging]()
+
+2. Select ios emulator, it will run the app on the ios emulator for few seconds.
+
+3. Allow the permission, the map will appear.
+
+## How to use
+
+1. Select your desired current user location. Adjust the location coordinate from ios emulator. select emulator and go "Feature > Location > Custom Location", fill the coordinate. Go google map and find the coordinate you found as you like.
+![Location Coordinate]()
+
+2. Long pressed the map to place the geofence marker, the slider will appear too. Slider indicated the geofence radius area.
+
+3. Place the marker same as user current location for testing.
+
+4. Again go to "Feature > Location > Custom Location", adjust one latitude to different coordinate. Eg; 5.12345 change to 6.12345 to get out the geofence area. The status change, notification appear with status.
+
+5. All done
+
+# Important Notice
+
+Android platform still not able to fully work for this package [flutter_geofence](https://pub.dev/packages/flutter_geofence). The creator/developer still working on this issues. [Issues/Problem for the android](https://github.com/DwayneCoussement/flutter_geofence/issues/5)
