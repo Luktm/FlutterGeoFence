@@ -27,7 +27,7 @@
 1. Select desired current user location. Adjust the location coordinate from ios emulator. select emulator and go "Feature > Location > Custom Location", fill in the coordinate. 
 ![Location Setting](https://github.com/Luktm/FlutterGeoFence/blob/master/Documentation/ios-emulator-custom-location.png)
 
-2. Open Google Maps and search locations using custom coordinates. Then "right click" the "What's here" option. Finally, copy the latitude and longitude coordinate to clipboard.
+2. Open Google Maps and search any locations. Then "right click" the "What's here" option. Finally, copy the latitude and longitude coordinate to clipboard.
 ![Google Map Coordinate](https://github.com/Luktm/FlutterGeoFence/blob/master/Documentation/google-map-get-coordinate.png)
 
 3. Hold on the map UI to place the pin/geofence marker, which will allow a slider to appear. The slider will indicate the radius of the geofence.
