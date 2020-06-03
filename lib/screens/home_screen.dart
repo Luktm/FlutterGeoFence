@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_geofence/geofence.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -70,13 +71,37 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   void dispose() {
     super.dispose();
     WidgetsBinding.instance.removeObserver(this);
-    Geofence.removeGeolocation(_location, GeolocationEvent.entry);
+    removeGeoFenceLocation();
   }
 
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    print("StateAppLifeCycle $state");
-    if (state == AppLifecycleState.resumed) {
-      _listenForPersmissionStatus();
+    switch (state) {
+      case AppLifecycleState.resumed:
+        print("resumed");
+        _listenForPersmissionStatus();
+        break;
+      case AppLifecycleState.detached:
+        print("detached");
+        break;
+      case AppLifecycleState.inactive:
+        print("inactive");
+        removeGeoFenceLocation();
+        setState(() {
+          _markers = {};
+          _geofenceMarkerPosition = null;
+        });
+        break;
+      case AppLifecycleState.paused:
+        print("paused");
+        break;
+      default:
+        print("Lifecycle error occur");
+    }
+  }
+
+  void removeGeoFenceLocation() {
+    if (_location != null) {
+      Geofence.removeGeolocation(_location, GeolocationEvent.entry);
     }
   }
 
@@ -140,7 +165,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   }
 
   void _setGeofenceRegion(LatLng geofenceMarkerLatLng) {
-    
     _location = Geolocation(
       id: "luktm",
       latitude: geofenceMarkerLatLng.latitude,
@@ -153,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       GeolocationEvent.entry,
     ).then((value) {
       print("Georegion added");
-      ;
+      
     }).catchError((error) {
       print("Added geofence failed, $error");
     });
