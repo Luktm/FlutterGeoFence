@@ -23,20 +23,19 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
   static LatLng _geofenceMarkerPosition;
 
-  static double _initRadius = 600.0;
-  
+  static double _initRadius = 500.0;
+
   String _userStatus = "None";
 
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
-
 
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addObserver(this);
-     Geofence.requestPermissions();
+    Geofence.requestPermissions();
     _initPlatformState();
 
     _listenForPersmissionStatus();
@@ -80,29 +79,16 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
   Future<void> _listenForPersmissionStatus() async {
     try {
-      final _status = await Permission.locationWhenInUse.status;
+      final _status = await Permission.locationWhenInUse.serviceStatus;
 
-      switch (_status) {
-        case PermissionStatus.granted:
-          print("permission granted");
+      if (_status.isEnabled) {
+         print("permission granted");
           _getUserLocation();
-          break;
-        case PermissionStatus.undetermined:
-          print("permission undetermined");
-          Geofence.requestPermissions();
-          break;
-        case PermissionStatus.denied:
-          print("permissoin denied");
-          break;
-        case PermissionStatus.restricted:
-          print("permission restricted");
-          break;
-        case PermissionStatus.permanentlyDenied:
-          print("permissoin permanently denied");
-          break;
-        default:
-          print("permission status not found");
+      } else {
+        print("permission denied");
       }
+
+    
     } catch (error) {
       print("get permission status error: $error");
     }
@@ -122,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
     Geofence.startListening(GeolocationEvent.exit, (entry) {
       _scheduleNotification("Outside GeoFence", "Byebye to: ${entry.id}");
-       setState(() {
+      setState(() {
         _userStatus = "outside";
       });
     });
@@ -258,7 +244,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                 ),
               );
             },
-          )
+          ),
         ],
       ),
       body: _initialPosition == null
@@ -322,15 +308,16 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: <Widget>[
-                              Text("Geofence area: ${(_initRadius / 100).toStringAsFixed(0)}KM"),
+                              Text(
+                                  "Geofence area: ${(_initRadius / 100).toStringAsFixed(0)}KM"),
                               Text("Status: $_userStatus")
                             ],
                           ),
                           Slider(
                               value: _initRadius,
                               divisions: 5,
-                              min: 600,
-                              max: 3000,
+                              min: 100,
+                              max: 1000,
                               onChangeEnd: (_) {
                                 _setGeofenceRegion(_geofenceMarkerPosition);
                               },

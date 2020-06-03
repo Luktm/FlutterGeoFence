@@ -22,20 +22,24 @@
 
 ## How to use
 
-1. Select your desired current user location. Adjust the location coordinate from ios emulator. select emulator and go "Feature > Location > Custom Location", fill the coordinate. 
+1. Select desired current user location. Adjust the location coordinate from ios emulator. select emulator and go "Feature > Location > Custom Location", fill the coordinate. 
 ![Location Setting](https://github.com/Luktm/FlutterGeoFence/blob/master/Documentation/ios-emulator-custom-location.png)
 
-2. Open google map and find the coordinate from any places, "right click" > "What's here".
+2. Open google map and find the coordinate from any places, "right click" > "What's here". Copy the latitude and longitude coordinate to clipboard
 ![Google Map Coordinate](https://github.com/Luktm/FlutterGeoFence/blob/master/Documentation/google-map-get-coordinate.png)
 
 3. Long pressed the map to place the geofence marker, the slider will appear too. Slider indicated the geofence radius area.
 
-4. Place the marker same as user current location for testing.
+4. Place the marker same as user current location for testing. Important, initial marker placed won't trigger the function. the function triggered when the user location is manually adjusted outside and inside the boundary back and forth. See instruction below number 5.
 
-5. Again go to "Feature > Location > Custom Location", adjust one latitude to different coordinate. Eg; 5.12345 change to 6.12345 to get out the geofence area. The status change, notification appear with status.
+5. Go to "Feature > Location > Custom Location", adjust one latitude or longitude to different coordinate. Eg; 5.12345 change to 6.12345 to get out the geofence area, then 6.12345 to 5.12345 again to see the function.
 
-6. All done
+6. All done 
+
+7. [Demo video](https://drive.google.com/file/d/1XyS7L1rmGYLBJZXqHos6h5jV4hhM-8RV/view?usp=sharing)
 
 # Important Notice
 
 Android platform still not able to fully work for this package [flutter_geofence](https://pub.dev/packages/flutter_geofence). The creator/developer still working on this issues. [Issues/Problem](https://github.com/DwayneCoussement/flutter_geofence/issues/5) for the android.
+
+[APK download](https://drive.google.com/file/d/1LQ0nXKQXtySBGLlmmzStY063saNKdgiV/view?usp=sharing), the function is not work as expected as mention from the above, until further creator notice!!
