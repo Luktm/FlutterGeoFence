@@ -27,6 +27,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
   String _userStatus = "None";
 
+  static Geolocation _location;
+
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
@@ -68,6 +70,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   void dispose() {
     super.dispose();
     WidgetsBinding.instance.removeObserver(this);
+    Geofence.removeGeolocation(_location, GeolocationEvent.entry);
   }
 
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -82,13 +85,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       final _status = await Permission.locationWhenInUse.serviceStatus;
 
       if (_status.isEnabled) {
-         print("permission granted");
-          _getUserLocation();
+        print("permission granted");
+        _getUserLocation();
       } else {
         print("permission denied");
       }
-
-    
     } catch (error) {
       print("get permission status error: $error");
     }
@@ -139,25 +140,20 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   }
 
   void _setGeofenceRegion(LatLng geofenceMarkerLatLng) {
-    Geolocation location = Geolocation(
+    
+    _location = Geolocation(
       id: "luktm",
       latitude: geofenceMarkerLatLng.latitude,
       longitude: geofenceMarkerLatLng.longitude,
       radius: _initRadius,
     );
 
-    Geofence.removeGeolocation(
-      location,
-      GeolocationEvent.entry,
-    );
-
     Geofence.addGeolocation(
-      location,
+      _location,
       GeolocationEvent.entry,
     ).then((value) {
-      print("great success");
-
-      // _scheduleNotification("Georegion added", "Your geofence has been added");
+      print("Georegion added");
+      ;
     }).catchError((error) {
       print("Added geofence failed, $error");
     });
@@ -319,7 +315,13 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                               min: 100,
                               max: 1000,
                               onChangeEnd: (_) {
-                                _setGeofenceRegion(_geofenceMarkerPosition);
+                                Geofence.removeGeolocation(
+                                  _location,
+                                  GeolocationEvent.entry,
+                                ).then((value) {
+                                  print("Georegion removed");
+                                  _setGeofenceRegion(_geofenceMarkerPosition);
+                                });
                               },
                               onChanged: (newValue) {
                                 setState(() {
