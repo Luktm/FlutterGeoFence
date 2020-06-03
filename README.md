@@ -1,14 +1,16 @@
 ## Geofence flutter setup.
 
-1. Clone the project.
+1. [Setup flutter](https://flutter.dev/docs/get-started/install/macos)
 
-2. cd to the directory, eg. cd/user/yourProject Directory/.
+2. Clone the project.
 
-3. run "flutter pub get" command in terminal and wait for installing the package.
+3. cd to the directory, eg. cd/user/yourProject Directory/.
 
-4. cd to ios directory, run "pod install", wait for installing done, run command "cd .." to back the root directory.
+4. run "flutter pub get" command in terminal and wait for installing the package.
 
-5. All done.
+5. cd to ios directory, run "pod install", wait for installing done, run command "cd .." to back the root directory.
+
+6. All done.
 
 
 ## Run ios emulator.
