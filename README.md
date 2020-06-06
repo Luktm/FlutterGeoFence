@@ -29,7 +29,7 @@ Open Google Maps, search any locations. Right click `What's here` option. Copy t
 
 ![Google Map Coordinate](https://github.com/Luktm/FlutterGeoFence/blob/master/Documentation/google-map-get-coordinate.png)
 
-Ios emulator go to `Feature > Location > Custom Location` adjust the latitude or longitude. Eg; Changing 5.12345 to 6.12345 will get you out of the geofence area, vice versa to see the geofence function again.
+Go to ios emulator `Feature > Location > Custom Location` adjust the latitude or longitude. Eg; Changing 5.12345 to 6.12345 will get you out of the geofence area, vice versa to see the geofence function again.
 
 ![Location Setting](https://github.com/Luktm/FlutterGeoFence/blob/master/Documentation/ios-emulator-custom-location.png)
 
