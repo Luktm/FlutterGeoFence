@@ -8,7 +8,7 @@ Clone the project.
 
 ### Run IOS Emulator
 
-Change project directory, eg. `cd/user/yourProjectDirectory/`.
+Change project directory. Eg; `cd/user/yourProjectDirectory/`.
 
 Run `flutter pub get` command in terminal and wait for installing the package.
 
