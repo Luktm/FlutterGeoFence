@@ -15,7 +15,7 @@
 
 ## Run ios emulator.
 
-1. Open the visual code studio, select "Run > Run Without Debugging"
+1. Open the visual code studio, locate the project file or drag the project file to vcs, select "Run > Run Without Debugging"
 ![Run without debugging](https://github.com/Luktm/FlutterGeoFence/blob/master/Documentation/vcs-run-dubuging.png)
 
 2. Select ios emulator, it will run the app on the ios emulator for few seconds.

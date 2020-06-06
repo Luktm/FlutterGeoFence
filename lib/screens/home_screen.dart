@@ -183,7 +183,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     });
   }
 
-  Future<void> _addMarkLongPressed(LatLng latLng) async {
+  Future<void> _addMarkerLongPressed(LatLng latLng) async {
     setState(() {
       _markers = {};
       _geofenceMarkerPosition = latLng;
@@ -288,7 +288,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                     myLocationButtonEnabled: true,
                     tiltGesturesEnabled: false,
                     onLongPress: (latLng) {
-                      _addMarkLongPressed(latLng);
+                      _addMarkerLongPressed(latLng);
                     },
                     markers: _markers,
                     circles: _geofenceMarkerPosition == null
