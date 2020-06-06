@@ -14,12 +14,10 @@ Run `flutter pub get` command in terminal and wait for installing the package.
 
 Change to ios direcotory, `cd ios`, run `pod install`, run command `cd ..`.
 
-Open the visual code studio, locate the project file or drag the project file to vcs, select `Run > Run Without Debugging` or run command `flutter run`.
+Open ios Emulator.
+
+Open the text editor, locate or drag the project file to text editor, select `Run > Run Without Debugging` or run command `flutter run` in terminal.
 ![Run without debugging](https://github.com/Luktm/FlutterGeoFence/blob/master/Documentation/vcs-run-dubuging.png)
-
-Select ios emulator, it will run the app on the ios emulator for few seconds. (only for `Run Without Debugging`)
-
-If run by command `flutter run`, emulator must be open by manually.
 
 ### How To Use
 
@@ -41,7 +39,7 @@ IOS Emulator go to `Feature > Location > Custom Location` adjust the latitude or
 
 [Demo video](https://drive.google.com/file/d/1XyS7L1rmGYLBJZXqHos6h5jV4hhM-8RV/view?usp=sharing)
 
-### Important Notice
+## Important Notice
 
 Android platform still not able to fully work for this package [flutter_geofence](https://pub.dev/packages/flutter_geofence). The creator/developer still working on this [issues](https://github.com/DwayneCoussement/flutter_geofence/issues/5) for the android platform.
 
