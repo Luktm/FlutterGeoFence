@@ -1,12 +1,12 @@
 ## Geofence Demo.
 
-### Flutter setup
+### Flutter Setup
 
 [Setup flutter](https://flutter.dev/docs/get-started/install/macos)
 
 Clone the project.
 
-### Run ios emulator.
+### Run IOS Emulator.
 
 Change project directory, eg. cd/user/yourProject Directory/.
 
@@ -21,7 +21,7 @@ Select ios emulator, it will run the app on the ios emulator for few seconds. (o
 
 If run by command `flutter run`, emulator must be open by manually.
 
-### How to use
+### How To Use
 
 Allow the permission, the map will appear.
 
