@@ -1,4 +1,4 @@
-## Geofence Demo.
+## Geofence Demo
 
 ### Flutter Setup
 
