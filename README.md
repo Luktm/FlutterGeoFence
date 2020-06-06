@@ -6,7 +6,7 @@
 
 Clone the project.
 
-### Run IOS Emulator.
+### Run IOS Emulator
 
 Change project directory, eg. cd/user/yourProject Directory/.
 
@@ -14,7 +14,7 @@ Run `flutter pub get` command in terminal and wait for installing the package.
 
 Change to ios direcotory, `cd ios`, run `pod install`, run command `cd ..`.
 
-Open ios Emulator.
+Open Ios Emulator.
 
 Open the text editor, locate or drag the project file to text editor, select `Run > Run Without Debugging` or run command `flutter run` in terminal.
 ![Run without debugging](https://github.com/Luktm/FlutterGeoFence/blob/master/Documentation/vcs-run-dubuging.png)
@@ -25,9 +25,9 @@ Allow the permission, the map will appear.
 
 Hold on the map UI to place the pin/geofence marker, which will allow a slider to appear. The slider will indicate the radius of the geofence.
 
-![Place Geofence Marker](https://github.com/Luktm/FlutterGeoFence/blob/master/Documentation/geofence-marker.png)
-
 Importantly, the initial marker placed won't trigger the geofence function. It will only happen when the user location is manually adjusted outside and inside the geofence boundary.
+
+![Place Geofence Marker](https://github.com/Luktm/FlutterGeoFence/blob/master/Documentation/geofence-marker.png)
 
 Open Google Maps, search any locations. Right click `What's here` option. Copy the latitude and longitude.
 
