@@ -6,7 +6,7 @@
 
 Clone the project.
 
-### Run IOS Emulator
+### Install App to Ios Emulator
 
 Change project directory. Eg; `cd/user/yourProjectDirectory/`.
 
