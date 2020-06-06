@@ -20,7 +20,7 @@
 
 2. Select ios emulator, it will run the app on the ios emulator for few seconds. (only for "Run Without Debugging")
 
-3. If run by command "flutter run", must open emulator manually.
+3. If run by command "flutter run", emulator must be open by manually.
 
 
 ## How to use
