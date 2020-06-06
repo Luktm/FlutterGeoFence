@@ -28,14 +28,17 @@
 1. Allow the permission, the map will appear.
 
 2. Hold on the map UI to place the pin/geofence marker, which will allow a slider to appear. The slider will indicate the radius of the geofence.
+
 ![Place Geofence Marker](https://github.com/Luktm/FlutterGeoFence/blob/master/Documentation/geofence-marker.png)
 
 3. Importantly, the initial marker placed won't trigger the geofence function. It will only happen when the user location is manually adjusted outside and inside the boundary. See instruction number 5.
 
 4. Open Google Maps and search any locations. Then "right click" the "What's here" option. Finally, copy the latitude and longitude coordinate to clipboard.
+
 ![Google Map Coordinate](https://github.com/Luktm/FlutterGeoFence/blob/master/Documentation/google-map-get-coordinate.png)
 
 5. Go back to ios emulator open "Feature > Location > Custom Location" and adjust the latitude or longitude for different coordinates. Eg; Changing 5.12345 to 6.12345 will get you out of the geofence area, vice versa to see the geofence function again.
+
 ![Location Setting](https://github.com/Luktm/FlutterGeoFence/blob/master/Documentation/ios-emulator-custom-location.png)
 
 6. All done 
