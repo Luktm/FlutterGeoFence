@@ -12,7 +12,7 @@ Change project directory. Eg; `cd/user/yourProjectDirectory/`.
 
 Run `flutter pub get` command in terminal and wait for installing the package.
 
-Change to ios direcotory, `cd ios`, run `pod install`, run command `cd ..`.
+Change to ios directory, `cd ios`, run `pod install`, run command `cd ..`.
 
 Open Ios Emulator.
 
