@@ -8,7 +8,7 @@ Clone the project.
 
 ### Install App to Ios Emulator
 
-Change project directory. Eg; `cd/user/yourProjectDirectory/`.
+Change project directory. Eg; `cd/yourProjectDirectory/`.
 
 Run `flutter pub get` command in terminal and wait for installing the package, `cd ios`, run `pod install`, then back to root project.
 
