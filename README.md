@@ -37,7 +37,7 @@ IOS Emulator go to `Feature > Location > Custom Location` adjust the latitude or
 
 ![Location Setting](https://github.com/Luktm/FlutterGeoFence/blob/master/Documentation/ios-emulator-custom-location.png)
 
-[Demo video.](https://drive.google.com/file/d/1XyS7L1rmGYLBJZXqHos6h5jV4hhM-8RV/view?usp=sharing)
+Look at the demonstrate video [here](https://drive.google.com/file/d/1XyS7L1rmGYLBJZXqHos6h5jV4hhM-8RV/view?usp=sharing)
 
 ## Important Notice
 
