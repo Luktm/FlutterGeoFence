@@ -13,7 +13,7 @@ Change project directory. Eg; `cd/yourProjectDirectory/`.
 Run `flutter pub get` command in terminal and wait for installing the package, `cd ios`, run `pod install`, then back to root project.
 
 Locate or drag the project folder to VCS. `Run > Run Without Debugging` or run command `flutter run` in terminal when ios emulator is opened.
-![Run without debugging](https://github.com/Luktm/FlutterGeoFence/blob/master/Documentation/vcs-run-dubuging.png)
+![](https://i.imgur.com/fZusuR3.png)
 
 ### How To Use
 
@@ -23,15 +23,15 @@ Hold on the map UI to place the pin/geofence marker, which will allow a slider t
 
 Importantly, the initial marker placed won't trigger the geofence function. It will only happen when the user location is manually adjusted outside and inside the geofence boundary.
 
-![Place Geofence Marker](https://github.com/Luktm/FlutterGeoFence/blob/master/Documentation/geofence-marker.png)
+![](https://i.imgur.com/bXxxEsw.png)
 
 Open Google Maps, search any locations. Right click `What's here` option. Copy the latitude and longitude.
 
-![Google Map Coordinate](https://github.com/Luktm/FlutterGeoFence/blob/master/Documentation/google-map-get-coordinate.png)
+![](https://i.imgur.com/YZr5KkL.png)
 
 Go to ios emulator `Feature > Location > Custom Location` adjust the latitude or longitude. Eg; Changing 5.12345 to 6.12345 will get you out of the geofence area, vice versa to see the geofence function again.
 
-![Location Setting](https://github.com/Luktm/FlutterGeoFence/blob/master/Documentation/custom-location.png)
+![](https://i.imgur.com/K63qIl3.png)
 
 [Demo video](https://drive.google.com/file/d/1XyS7L1rmGYLBJZXqHos6h5jV4hhM-8RV/view?usp=sharing)
 
