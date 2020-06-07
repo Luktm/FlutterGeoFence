@@ -13,6 +13,7 @@ Change project directory. Eg; `cd/yourProjectDirectory/`.
 Run `flutter pub get` command in terminal and wait for installing the package, `cd ios`, run `pod install`, then back to root project.
 
 Locate or drag the project folder to VCS. `Run > Run Without Debugging` or run command `flutter run` in terminal when ios emulator is opened.
+
 ![Run without debugging](https://github.com/Luktm/FlutterGeofence/blob/master/Documentation/vcs-run-dubuging.jpg)
 
 ### How To Use
